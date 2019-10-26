@@ -1,0 +1,170 @@
+@startuml
+'
+'abstract class AbstractList
+'abstract AbstractCollection
+'interface List
+'interface Collection
+'
+'List <|-- AbstractList
+'Collection <|-- AbstractCollection
+'
+'Collection <|- List
+'AbstractCollection <|- AbstractList
+'AbstractList <|-- ArrayList
+'
+'class ArrayList {
+'Object[] elementData
+'size()
+'}
+
+
+'enum TimeUnit {
+'DAYS
+'HOURS
+'MINUTES
+'}
+
+
+class User{
+    uid:Integer
+    userName:String
+    passWord:String
+    schoolId:Long
+
+'    token
+}
+
+class Good{
+    gid:Integer
+    goodName:String
+    goodDetail:String
+    goodStatus:Integer
+    goodImgUrl:String
+}
+class Interceptor
+class Controller
+
+Interceptor <|-- Controller
+
+class RegisterController{
+    registerUser(User user): String
+    .................................()
+}
+Controller <|- RegisterController
+
+class LoginController{
+    getToken(User user): String
+    .................................()
+}
+Controller <|- LoginController
+
+class UserController{
+    userService:IUserService
+
+    findUserByUid(Integer uid):User
+    deleteUserByUid(Integer uid):Void
+    resetUsernameByUid(Integer uid): String
+    resetPassWordByUid(Integer uid): String
+    .................................()
+}
+
+
+
+interface IUserService{
+        findUserByUid(Integer uid):User
+        deleteUserByUid(Integer uid):Void
+        resetUsernameByUid(Integer uid): String
+        resetPassWordByUid(Integer uid): String
+            .................................()
+
+}
+
+class UserServiceImpl{
+        userMapper:IUserMapper
+
+        findUserByUid(Integer uid):User
+        deleteUserByUid(Integer uid):Void
+        resetUsernameByUid(Integer uid): String
+        resetPassWordByUid(Integer uid): String
+        .................................()
+
+}
+
+interface IUserMapper{
+    findUserByUid(Integer uid):User
+    deleteUserByUid(Integer uid):Void
+    resetUsernameByUid(Integer uid): String
+    resetPassWordByUid(Integer uid): String
+    .................................()
+}
+
+class UserMapperImpl{
+    findUserByUid(Integer uid):User
+    deleteUserByUid(Integer uid):Void
+    resetUsernameByUid(Integer uid): String
+    resetPassWordByUid(Integer uid): String
+    .................................()
+}
+
+User <-- UserController
+Controller <|-- UserController
+IUserService <- UserController
+
+IUserService <|- UserServiceImpl
+IUserMapper <- UserServiceImpl
+IUserMapper <|- UserMapperImpl
+
+'------
+class GoodsController{
+    goodsService:IGoodsService
+
+    findGoodByGid(Integer gid): Good
+    findGoodImgByGid(Integer gid): String
+    findGoodStatusByGid(Integer gid) Integer
+    findGoodDetailByGid(Integer gid) String
+    .................................()
+}
+
+interface IGoodsService{
+    findGoodByGid(Integer gid): Good
+    findGoodImgByGid(Integer gid): String
+    findGoodStatusByGid(Integer gid) Integer
+    findGoodDetailByGid(Integer gid) String
+    .................................()
+}
+
+class GoodsServiceImpl{
+    goodsMapper:IGoodsMapper
+
+    findGoodByGid(Integer gid): Good
+    findGoodImgByGid(Integer gid): String
+    findGoodStatusByGid(Integer gid) Integer
+    findGoodDetailByGid(Integer gid) String
+    .................................()
+}
+
+interface IGoodsMapper{
+    findGoodByGid(Integer gid): Good
+    findGoodImgByGid(Integer gid): String
+    findGoodStatusByGid(Integer gid) Integer
+    findGoodDetailByGid(Integer gid) String
+    .................................()
+}
+
+class GoodsMapperImpl{
+    findGoodByGid(Integer gid): Good
+    findGoodImgByGid(Integer gid): String
+    findGoodStatusByGid(Integer gid) Integer
+    findGoodDetailByGid(Integer gid) String
+    .................................()
+}
+
+Good <-- GoodsController
+Controller <|-- GoodsController
+IGoodsService <- GoodsController
+
+IGoodsService <|- GoodsServiceImpl
+IGoodsMapper <- GoodsServiceImpl
+IGoodsMapper <|- GoodsMapperImpl
+
+@enduml

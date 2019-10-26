@@ -1,0 +1,20 @@
+server:
+  port: 80
+  servlet:
+    context-path: /jiebei
+spring:
+  datasource:
+    username: czh
+    password: 123
+    url: jdbc:mysql://49.235.150.59:3306/jiebei
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://127.0.0.1:10086/eureka
+#  instance:
+#    ip-address: 127.0.0.1
+#    prefer-ip-address: true
+#
+#mybatis:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
