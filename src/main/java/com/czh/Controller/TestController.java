@@ -1,19 +1,35 @@
 package com.czh.Controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.czh.mapper.TokenMapper;
 import com.czh.pojo.Good;
+import com.czh.pojo.Token;
 import com.czh.pojo.User;
 import com.czh.service.GoodsService;
+import com.czh.service.TokenService;
+import com.czh.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
 @RestController
+@RequestMapping("/test1")
 public class TestController {
 
     @Autowired
     private GoodsService goodsService;
 
+    @Autowired
+    private TokenService tokenService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private TokenMapper tokenMapper;
     @RequestMapping("/testJson")
     public void testJson(@RequestBody User user){
         System.out.println(user);
@@ -82,12 +98,32 @@ public class TestController {
 //        System.out.println(Username);
     }
 
-    @RequestMapping(value = "/testSql")
-    public void testSql(){
-        Good good = new Good();
-        good.setGid(1);
-        good = goodsService.findGoodByGid(good);
-        System.out.println(good);
+    @RequestMapping(value = "/test",method = RequestMethod.POST)
+    public void testSql() throws Exception {
+        Token insert_token = new Token();
+        insert_token.setUid(1);
+        insert_token.setBuildtime(123456);
+//        token.setTid(11);
+        insert_token.setToken("dafsadfsadfdsafdsa");
+        System.out.println(insert_token);
+//        tokenService.addToken(token);
+//        tokenMapper.insert(token);
+        tokenMapper.insertSelective(insert_token);
+        System.out.println(insert_token);
+
+
+//        User user = new User();
+//        user.setSchoolid("12311");
+//        user.setPassword("222");
+//        System.out.println(user);
+//        userService.addUser(user);
+//        System.out.println(user);
+
+    }
+
+    @RequestMapping("/tt")
+    private void ttest(HttpServletRequest request){
+        System.out.println(request.getHeader("XW-Token"));
     }
 
 
