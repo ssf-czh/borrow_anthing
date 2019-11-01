@@ -1,5 +1,6 @@
 package com.czh.Controller;
 
+import com.czh.common.vo.Result;
 import com.czh.common.vo.TokenResult;
 import com.czh.pojo.Token;
 import com.czh.pojo.User;
@@ -25,9 +26,8 @@ public class LoginController {
 
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<TokenResult> login(User loginUser) {
+    public ResponseEntity<Result> login(User loginUser) {
         //创建返回信息对象
-        TokenResult tokenResult = new TokenResult();
         System.out.println("哈哈");
 
         System.out.println(loginUser);
@@ -58,10 +58,8 @@ public class LoginController {
             tokenService.updataToken(token);
         }
         //返回Token信息给客户端
-        tokenResult.setFlag(true);
-        tokenResult.setMsg("登录成功");
-        tokenResult.setToken(TokenStr);
-        return ResponseEntity.ok(tokenResult);
+        Result result = new Result(200,"登入成功",TokenStr);
+        return ResponseEntity.ok(result);
         }
 
 }

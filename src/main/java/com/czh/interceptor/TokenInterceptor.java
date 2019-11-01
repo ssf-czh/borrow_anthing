@@ -46,6 +46,7 @@ public class TokenInterceptor implements HandlerInterceptor {
             return true;
         }
 
+        System.out.println(arg0.getRequestURI());
         //权限路径拦截
         arg1.setCharacterEncoding("UTF-8");
         //PrintWriter resultWriter=arg1.getWriter();
@@ -55,6 +56,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         //判断请求信息
         if(null==headerToken||headerToken.trim().equals("")){
             //resultWriter.write("你没有token,需要登录");
+            System.out.println(0);
             return false;
         }
         //解析Token信息
@@ -80,7 +82,8 @@ public class TokenInterceptor implements HandlerInterceptor {
             login_token.setUid(itokenUserId);
             List<Token> Token = tokenMapper.select(login_token);
             if(CollectionUtils.isEmpty(Token)){
-                //resultWriter.write("该用户不存在，请需要注册");
+//                resultWriter.write("该用户不存在，请需要注册");
+                System.out.println(1);
                 return false;
             }
             Token myToken = Token.get(0);
@@ -88,12 +91,14 @@ public class TokenInterceptor implements HandlerInterceptor {
 
             //数据库没有Token记录
             if(null==myToken) {
-                //resultWriter.write("我没有你的token？,需要登录");
+//                resultWriter.write("我没有你的token？,需要登录");
+                System.out.println(2);
                 return false;
             }
             //数据库Token与客户Token比较
             if( !headerToken.equals(myToken.getToken()) ){
-                //resultWriter.write("你的token修改过？,需要登录");
+//                resultWriter.write("你的token修改过？,需要登录");
+                System.out.println(3);
                 return false;
             }
             //判断Token过期
@@ -101,14 +106,17 @@ public class TokenInterceptor implements HandlerInterceptor {
             int chaoshi=(int)(new Date().getTime()-tokenDate.getTime())/1000;
             if(chaoshi>60*60*24*3){
                 //resultWriter.write("你的token过期了？,需要登录");
+                System.out.println(4);
                 return false;
             }
 
         } catch (Exception e) {
             e.printStackTrace();
             //resultWriter.write("反正token不对,需要登录");
+            System.out.println(5);
             return false;
         }
+        System.out.println("666");
         //最后才放行
         return true;
     }

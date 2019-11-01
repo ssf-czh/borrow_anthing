@@ -1,15 +1,13 @@
 package com.czh.Controller;
 
 import com.czh.common.utils.JWTUtil;
-import com.czh.common.vo.RegisterResult;
+import com.czh.common.vo.Result;
 import com.czh.pojo.User;
 import com.czh.service.UserService;
-import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,18 +20,17 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterResult> registerUser(User register_user){
-        RegisterResult registerResult = new RegisterResult();
+    public ResponseEntity<Result> registerUser(User register_user){
+
         //注册用户
         userService.addUser(register_user);
-        registerResult.setFlag(true);
-        registerResult.setMsg("注册成功");
 
-        return ResponseEntity.ok(registerResult);
+        Result result = new Result(200,"注册成功");
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("/update")
-    public ResponseEntity<Void> updateUser(HttpServletRequest request,User user){
+    public ResponseEntity<Result> updateUser(HttpServletRequest request,User user){
         String token = request.getHeader("XW-Token");
         int uid = JWTUtil.parseToUid(token);
 
@@ -44,7 +41,9 @@ public class UserController {
         user.setPassword(findUser.getPassword());
         System.out.println(user);
         userService.updateUserByUid(user);
-        return ResponseEntity.status(200).build();
+
+        Result result = new Result(200, "修改成功");
+        return ResponseEntity.ok(result);
     }
 
     /**
@@ -53,15 +52,16 @@ public class UserController {
      * @return
      */
     @PostMapping("/findUser")
-    public ResponseEntity<User> findUser(HttpServletRequest request){
+    public ResponseEntity<Result> findUser(HttpServletRequest request){
 
         String token = request.getHeader("XW-Token");
         System.out.println("token "+token);
         int uid = JWTUtil.parseToUid(token);
-        System.out.println(uid);
+
         User user = userService.findUserByUid(uid);
-        System.out.println(user);
-        return ResponseEntity.ok(user);
+
+        Result result = new Result(200, "查找用户成功", user);
+        return ResponseEntity.ok(result);
     }
 
 

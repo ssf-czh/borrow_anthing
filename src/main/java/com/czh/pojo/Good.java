@@ -17,5 +17,6 @@ public class Good {
     private String imgurl;
     private Integer status;
     private String detail;
+    private String type;
 
 }

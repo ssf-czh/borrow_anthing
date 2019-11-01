@@ -1,13 +1,12 @@
 package com.czh.common.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class TokenResult {
-    private boolean flag=false;
-    private String msg="";
-    private String token="";
-    public boolean isFlag() {
-        return flag;
-    }
+    private String token;
 }

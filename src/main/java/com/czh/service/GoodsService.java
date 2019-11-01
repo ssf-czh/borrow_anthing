@@ -2,6 +2,10 @@ package com.czh.service;
 
 import com.czh.pojo.Good;
 
+import java.util.List;
+
 public interface GoodsService {
-    public Good findGoodByGid(Good good);
+
+    //获取所有空闲商品
+    List<Good> findAllGoods();
 }

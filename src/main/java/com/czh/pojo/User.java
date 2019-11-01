@@ -19,7 +19,7 @@ public class User {
     private String phonenum;
     private String username;
     private String address;
-
-    @JsonIgnore
     private String password;
+    private String qq;
+    private String wechat;
 }

@@ -15,6 +15,7 @@ public enum ExceptionEnum {
     UPDATE_TOKEN_ERROR(400,"更新token失败"),
     ADD_USER_ERROR(400,"更新token失败"),
     USER_UPDATE_ERROR(400,"更新用户信息失败"),
+    GOOD_FIND_ERROR(400,"查询闲置商品出错"),
     ;
     private int code;
     private String msg;
