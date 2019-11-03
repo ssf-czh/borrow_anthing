@@ -1,6 +1,7 @@
 package com.czh.Controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.czh.mapper.GoodsMapper;
 import com.czh.mapper.TokenMapper;
 import com.czh.pojo.Good;
 import com.czh.pojo.Token;
@@ -11,6 +12,7 @@ import com.czh.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -29,7 +31,11 @@ public class TestController {
     private UserService userService;
 
     @Autowired
-    private TokenMapper tokenMapper;
+    private TokenMapper tokenMapper;;
+
+    @Autowired
+    private GoodsMapper goodsMapper;
+
     @RequestMapping("/testJson")
     public void testJson(@RequestBody User user){
         System.out.println(user);
@@ -122,8 +128,10 @@ public class TestController {
     }
 
     @RequestMapping("/tt")
-    private void ttest(HttpServletRequest request){
-        System.out.println(request.getHeader("XW-Token"));
+    private User ttest(HttpServletRequest request){
+        User user = new User();
+        user.setName("ccccc");
+        return user;
     }
 
 

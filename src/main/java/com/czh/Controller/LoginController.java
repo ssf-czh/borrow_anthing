@@ -33,7 +33,7 @@ public class LoginController {
         System.out.println(loginUser);
 
         //通过用户名密码查找用户
-        User lg_user = userService.findUser(loginUser.getSchoolid(),loginUser.getPassword());
+        User lg_user = userService.findUserByUsernameAndPassword(loginUser.getUsername(),loginUser.getPassword());
 
         //根据数据库的用户信息查询Token
         Token token = tokenService.findByUserId(lg_user.getUid());

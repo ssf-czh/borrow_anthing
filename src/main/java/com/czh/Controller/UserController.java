@@ -2,8 +2,11 @@ package com.czh.Controller;
 
 import com.czh.common.utils.JWTUtil;
 import com.czh.common.vo.Result;
+import com.czh.jiaowuchu.Login;
 import com.czh.pojo.User;
 import com.czh.service.UserService;
+
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/user")
@@ -20,13 +24,22 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<Result> registerUser(User register_user){
+    public ResponseEntity<Result> registerUser(User register_user, String schoolpw) throws IOException {
 
         //注册用户
-        userService.addUser(register_user);
 
-        Result result = new Result(200,"注册成功");
-        return ResponseEntity.ok(result);
+        int code = Login.login(register_user.getSchoolid(), schoolpw);
+
+        if(code == 1){
+            userService.addUser(register_user);
+
+            Result result = new Result(200,"注册成功");
+            return ResponseEntity.ok(result);
+        }else{
+            Result result = new Result(400,"教务处账号或密码错误");
+            return ResponseEntity.ok(result);
+        }
+
     }
 
     @PostMapping("/update")
@@ -36,10 +49,9 @@ public class UserController {
 
         User findUser = userService.findUserByUid(uid);
 
-        user.setUid(uid);
         user.setSchoolid(findUser.getSchoolid());
-        user.setPassword(findUser.getPassword());
-        System.out.println(user);
+        user.setUid(uid);
+
         userService.updateUserByUid(user);
 
         Result result = new Result(200, "修改成功");
@@ -63,6 +75,8 @@ public class UserController {
         Result result = new Result(200, "查找用户成功", user);
         return ResponseEntity.ok(result);
     }
+
+
 
 
 }

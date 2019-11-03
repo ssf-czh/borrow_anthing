@@ -6,6 +6,12 @@ import java.util.List;
 
 public interface GoodsService {
 
-    //获取所有空闲商品
-    List<Good> findAllGoods();
+    //根据type获取所有空闲商品
+    List<Good> findAllGoods(String type);
+
+    //根据gid查询商品详情
+    Good findGoodByGid(Integer gid);
+
+    //根据gid更新物品状态
+    void updateGoodStatusByGid(Integer gid);
 }

@@ -31,22 +31,24 @@ public class TokenInterceptor implements HandlerInterceptor {
             throws Exception {}
     @Override
     public boolean preHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2) throws Exception {
+
         allow_uri.add("/jiebei/user/register");
         allow_uri.add("/jiebei/login");
         allow_uri.add("/jiebei/test1/tt");
+        allow_uri.add("/jiebei/img/get");
 
-
-        //普通路径放行
-//        System.out.println(arg0.getRequestURI());
+//        普通路径放行
+        System.out.println(arg0.getRequestURI());
 //        if ("/jiebei/user/register".equals(arg0.getRequestURI()) || "/jiebei/login".equals(arg0.getRequestURI()) || "/jiebei/test1/tt".equals(arg0.getRequestURI())) {
-//            
+//
 //            return true;
 //        }
         if(allow_uri.contains(arg0.getRequestURI())){
             return true;
         }
+//        ------------------
+//        System.out.println(arg0.getRequestURI());
 
-        System.out.println(arg0.getRequestURI());
         //权限路径拦截
         arg1.setCharacterEncoding("UTF-8");
         //PrintWriter resultWriter=arg1.getWriter();
@@ -116,7 +118,7 @@ public class TokenInterceptor implements HandlerInterceptor {
             System.out.println(5);
             return false;
         }
-        System.out.println("666");
+        System.out.println("放行");
         //最后才放行
         return true;
     }

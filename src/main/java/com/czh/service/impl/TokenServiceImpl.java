@@ -24,7 +24,15 @@ public class TokenServiceImpl implements TokenService {
     public Token findByUserId(int uid){
         Token token = new Token();
         token.setUid(uid);
-        Token user_token = tokenMapper.selectOne(token);
+        Token user_token = null;
+        try {
+            user_token = tokenMapper.selectOne(token);
+        } catch(Exception e) {
+
+        }
+//        if(user_token == null){
+//            throw new JieBeiException(ExceptionEnum.TOKEN_FIND_ERROR);
+//        }
         return user_token;
     }
 
@@ -36,8 +44,13 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public void addToken(Token token) {
 //        tokenMapper.insertSelective(token);
-        int insert = tokenMapper.insert(token);
-        if(insert != 1){
+        Integer insert = null;
+        try {
+            insert = tokenMapper.insert(token);
+        } catch(Exception e) {
+
+        }
+        if(insert == null){
             throw new JieBeiException(ExceptionEnum.INSERT_TOKEN_ERROR);
         }
     }
@@ -50,8 +63,13 @@ public class TokenServiceImpl implements TokenService {
     @Transactional
     public void updataToken(Token token) {
 
-        int insert = tokenMapper.updateByPrimaryKey(token);
-        if(insert != 1){
+        Integer insert = null;
+        try {
+            insert = tokenMapper.updateByPrimaryKey(token);
+        } catch(Exception e) {
+
+        }
+        if(insert == null){
             throw new JieBeiException(ExceptionEnum.UPDATE_TOKEN_ERROR);
         }
     }

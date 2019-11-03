@@ -17,16 +17,20 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 根据学号和密码查找用户
-     * @param schoolid
+     * @param username
      * @param password
      * @return
      */
     @Override
-    public User findUser(String schoolid, String password) {
+    public User findUserByUsernameAndPassword(String username, String password) {
 //        return userMapper.findUser(schoolid,password);
         Example example = new Example(User.class);
-        example.createCriteria().andEqualTo("schoolid",schoolid).andEqualTo("password",password);
-        User user = userMapper.selectOneByExample(example);
+        example.createCriteria().andEqualTo("username",username).andEqualTo("password",password);
+        User user = null;
+        try {
+            user = userMapper.selectOneByExample(example);
+        }finally{
+        }
         if(user == null){
             throw new JieBeiException(ExceptionEnum.USER_NOT_ERROR);
         }
@@ -42,8 +46,14 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void addUser(User register_user) {
-        int insert = userMapper.insert(register_user);
-        if (insert != 1) {
+        Integer insert = null;
+        try {
+            insert = userMapper.insert(register_user);
+        } catch (Exception e){
+
+        }
+        System.out.println(insert);
+        if (insert == null) {
             throw new JieBeiException(ExceptionEnum.ADD_USER_ERROR);
         }
     }
@@ -51,7 +61,12 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void updateUserByUid(User user) {
-        int count = userMapper.updateByPrimaryKey(user);
+        Integer count = null;
+        try {
+            count = userMapper.updateByPrimaryKeySelective(user);
+        } catch (Exception e){
+            System.out.println(e);
+        }
         if(count!=1){
             throw new JieBeiException(ExceptionEnum.USER_UPDATE_ERROR);
         }
@@ -61,7 +76,12 @@ public class UserServiceImpl implements UserService {
     public User findUserByUid(int uid) {
         User uid_user = new User();
         uid_user.setUid(uid);
-        User user = userMapper.selectOne(uid_user);
+        User user = null;
+        try {
+            user = userMapper.selectOne(uid_user);
+        } catch(Exception e) {
+
+        }
         if(null == user){
             throw new JieBeiException(ExceptionEnum.USER_NOT_ERROR);
         }
