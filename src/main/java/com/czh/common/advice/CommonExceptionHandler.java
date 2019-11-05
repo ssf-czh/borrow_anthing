@@ -13,6 +13,6 @@ public class CommonExceptionHandler {
     @ExceptionHandler({JieBeiException.class})
     public ResponseEntity<Result> handerException(JieBeiException e){
         ExceptionEnum exceptionEnum = e.getExceptionEnum();
-        return ResponseEntity.status(exceptionEnum.getCode()).body(new Result(exceptionEnum));
+        return ResponseEntity.status(200).body(new Result(exceptionEnum));
     }
 }
