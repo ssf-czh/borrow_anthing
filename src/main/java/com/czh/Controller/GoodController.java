@@ -26,8 +26,8 @@ public class GoodController {
 //    @JsonView(Good.OneView.class)
 //    @JsonView(Result.ZeroView.class)
 //    ResponseEntity<Result>
-    public ResponseEntity<Result> findAllGoods(@RequestParam(required = true,defaultValue = "0") String type){
-        List<Good> goodList = goodsService.findAllGoods(type);
+    public ResponseEntity<Result> findAllGoods(@RequestParam(required = true,defaultValue = "0") String type,String keyword){
+        List<Good> goodList = goodsService.findAllGoods(type,keyword);
         Result result = new Result(200,"查询商品成功",goodList);
         return ResponseEntity.ok(result);
 //        return ResponseEntity.ok(goodList);

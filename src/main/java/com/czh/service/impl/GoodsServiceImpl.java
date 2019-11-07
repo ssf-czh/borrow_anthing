@@ -5,6 +5,7 @@ import com.czh.common.exception.JieBeiException;
 import com.czh.mapper.GoodsMapper;
 import com.czh.pojo.Good;
 import com.czh.service.GoodsService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,12 +22,16 @@ public class GoodsServiceImpl implements GoodsService {
 
 
     @Override
-    public List<Good> findAllGoods(String type) {
+    public List<Good> findAllGoods(String type,String keyword) {
         Good good = new Good();
         good.setStatus(0);
         List<Good> goodList = null;
         Example example = new Example(Good.class);
-        example.createCriteria().andEqualTo("type",type).andEqualTo("status",2);
+        Example.Criteria criType = example.createCriteria();
+        criType.andEqualTo("type",type).andEqualTo("status",2);
+        Example.Criteria crilike = example.createCriteria();
+        if(StringUtils.isNotBlank(keyword))crilike.orLike("name","%"+keyword+"%").orLike("detail","%"+keyword+"%");
+        example.and(crilike);
         try {
             goodList = goodsMapper.selectByExample(example);
         } catch(Exception e) {
