@@ -25,6 +25,7 @@ public enum ExceptionEnum {
     DISCUSSION_NOT_ERROR(400,"查找所有帖子失败"),
     COMMNET_ADD_ERROR(400,"评论失败"),
     COUNT_ADD_ERROR(400,"评论数增加失败"),
+	//
     ;
     private int code;
     private String msg;
