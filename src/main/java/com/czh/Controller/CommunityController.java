@@ -42,9 +42,10 @@ public class CommunityController {
         return ResponseEntity.ok(result);
     }
 
+//    查找帖子 支持关键词搜索
     @GetMapping("/findAllDisc")
-    public ResponseEntity<Result> getAllDisc(){
-        List<Discussion> discussionList = discussionService.findAllDisc();
+    public ResponseEntity<Result> getAllDisc(String keyword){
+        List<Discussion> discussionList = discussionService.findAllDisc(keyword);
         Result result = new Result(200,"查询所有帖子成功",discussionList);
         return ResponseEntity.ok(result);
     }

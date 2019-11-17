@@ -8,8 +8,8 @@ public interface DiscussionService {
     //创建一个帖子
     void createDiscussion(Discussion discussion);
 
-    //查询所有的帖子
-    List<Discussion> findAllDisc();
+    //查询所有的帖子 可以根据关键词搜索
+    List<Discussion> findAllDisc(String keyword);
 
     //根据主键did来增加count
     void addCount(Integer did);

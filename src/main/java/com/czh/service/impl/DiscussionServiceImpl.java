@@ -5,10 +5,12 @@ import com.czh.common.exception.JieBeiException;
 import com.czh.mapper.DiscussionMapper;
 import com.czh.pojo.Discussion;
 import com.czh.service.DiscussionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -34,9 +36,16 @@ public class DiscussionServiceImpl implements DiscussionService {
     }
 
     @Override
-    public List<Discussion> findAllDisc() {
+    public List<Discussion> findAllDisc(String keyword) {
 
-        List<Discussion> discussionList = discussionMapper.selectAll();
+        List<Discussion> discussionList = null;
+        Example example = new Example(Discussion.class);
+        Example.Criteria criteria = example.createCriteria();
+
+
+        if(StringUtils.isNotBlank(keyword))criteria.andLike("title","%"+keyword+"%");
+        discussionList = discussionMapper.selectByExample(example);
+
         if(CollectionUtils.isEmpty(discussionList)){
             throw new JieBeiException(ExceptionEnum.DISCUSSION_NOT_ERROR);
         }

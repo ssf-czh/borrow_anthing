@@ -20,7 +20,7 @@ public class GoodController {
     @Autowired
     private GoodsService goodsService;
 
-//    根据type查询所有空闲物品
+//    根据type查询所有空闲物品 还有关键词搜索
     @GetMapping("/findAllGoods")
 //    @JsonView(Good.OneView.class)
 //    @JsonView(Result.ZeroView.class)
