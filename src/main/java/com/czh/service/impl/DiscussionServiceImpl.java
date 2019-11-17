@@ -20,6 +20,7 @@ public class DiscussionServiceImpl implements DiscussionService {
     @Autowired
     private DiscussionMapper discussionMapper;
 
+
     @Override
     public void createDiscussion(Discussion discussion) {
 
@@ -73,5 +74,18 @@ public class DiscussionServiceImpl implements DiscussionService {
         Discussion discussion = new Discussion();
         discussion.setDid(did);
         return discussionMapper.selectOne(discussion);
+    }
+
+    @Override
+    @Transactional
+    public void addLikes(Integer did) {
+
+        try {
+            Discussion discussionByDid = findDiscussionByDid(did);
+            discussionByDid.setLikes(discussionByDid.getLikes()+1);
+            discussionMapper.updateByPrimaryKey(discussionByDid);
+        } catch (Exception e) {
+            throw new JieBeiException(ExceptionEnum.DISC_LIKES_ERROR);
+        }
     }
 }

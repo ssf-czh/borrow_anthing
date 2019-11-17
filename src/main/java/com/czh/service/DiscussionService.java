@@ -16,4 +16,9 @@ public interface DiscussionService {
 
     //根据主键did查找帖子
     Discussion findDiscussionByDid(Integer did);
+
+    //增加喜欢
+    void addLikes(Integer did);
+
+
 }

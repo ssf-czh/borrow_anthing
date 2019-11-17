@@ -51,6 +51,7 @@ public class CommunityController {
     }
 
 
+    //发布评论
     @PostMapping("/publCommnet")
     public ResponseEntity<Result> publishComment(Comment comment
             , HttpServletRequest httpServletRequest){
@@ -70,6 +71,13 @@ public class CommunityController {
     public ResponseEntity<Result> findAllComment(@RequestParam("did") Integer did){
         List<Comment> commentList = commentService.findCommentsByDid(did);
         Result result = new Result(200, "查找帖子所有回复成功 ", commentList);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/addDiscLikes")
+    public ResponseEntity<Result> addDiscLikes(@RequestParam("did") Integer did){
+        discussionService.addLikes(did);
+        Result result = new Result(200, "点赞成功！");
         return ResponseEntity.ok(result);
     }
 }
