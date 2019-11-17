@@ -14,4 +14,7 @@ public interface GoodsService {
 
     //根据gid更新物品状态
     void updateGoodStatusByGid(Integer gid);
+
+    //新增物品
+    void addGood(Integer uid, Good good);
 }

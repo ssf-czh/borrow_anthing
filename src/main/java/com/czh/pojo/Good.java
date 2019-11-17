@@ -27,6 +27,7 @@ public class Good {
 //    物品状态 0表待审核 1表示借出 2表示空闲
     private Integer status;
     private String detail;
+    private Double price;
 
     @JsonView(OneView.class)
     public String getName() {

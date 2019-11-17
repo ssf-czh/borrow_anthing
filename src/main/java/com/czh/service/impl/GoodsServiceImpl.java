@@ -66,10 +66,26 @@ public class GoodsServiceImpl implements GoodsService {
         try {
             count = goodsMapper.updateByPrimaryKeySelective(good);
         } catch (Exception e) {
+            throw new JieBeiException(ExceptionEnum.GOOD_STATUS_ERROR);
         }
         if(count == null){
             throw new JieBeiException(ExceptionEnum.GOOD_STATUS_ERROR);
         }
         System.out.println("count: "+ count);
+    }
+
+    @Override
+    @Transactional
+    public void addGood(Integer uid, Good good) {
+        Integer count = null;
+        good.setUid(uid);
+        try {
+            count = goodsMapper.insert(good);
+        }catch (Exception e){
+            throw new JieBeiException(ExceptionEnum.GOOD_INSERT_ERROR);
+        }
+        if(count == null){
+            throw new JieBeiException(ExceptionEnum.GOOD_INSERT_ERROR);
+        }
     }
 }

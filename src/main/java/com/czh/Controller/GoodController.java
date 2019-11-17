@@ -1,5 +1,6 @@
 package com.czh.Controller;
 
+import com.czh.common.utils.JWTUtil;
 import com.czh.common.vo.Result;
 import com.czh.pojo.Good;
 import com.czh.pojo.User;
@@ -8,11 +9,9 @@ import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.GsonBuilderUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RequestMapping("/good")
@@ -38,6 +37,17 @@ public class GoodController {
     public ResponseEntity<Result> findGoodByGid(@RequestParam(required = true) Integer gid){
         Good good = goodsService.findGoodByGid(gid);
         Result result = new Result(200, "查询商品成功", good);
+        return ResponseEntity.ok(result);
+    }
+
+    //根据uid添加商品
+    @PostMapping("/addGood")
+    public ResponseEntity<Result> addGood(Good good, HttpServletRequest request){
+        String token = request.getHeader("XW-Token");
+        Integer uid = JWTUtil.parseToUid(token);
+        good.setStatus(2);
+        goodsService.addGood(uid,good);
+        Result result = new Result(200, "新增物品成功");
         return ResponseEntity.ok(result);
     }
 
