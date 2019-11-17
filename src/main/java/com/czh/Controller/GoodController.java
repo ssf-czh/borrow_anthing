@@ -51,5 +51,14 @@ public class GoodController {
         return ResponseEntity.ok(result);
     }
 
+    //根据uid 查找用户下的所有发布商品
+    @PostMapping("/findAllGoodsByUid")
+    public ResponseEntity<Result> findAllGoodsByUid(HttpServletRequest request){
+        String token = request.getHeader("XW-Token");
+        Integer uid = JWTUtil.parseToUid(token);
+        List<Good> goodList = goodsService.findAllGoodsByUid(uid);
+        Result result = new Result(200, "查询成功",goodList);
+        return ResponseEntity.ok(result);
+    }
 
 }

@@ -27,6 +27,7 @@ public enum ExceptionEnum {
     COUNT_ADD_ERROR(400,"评论数增加失败"),
     GOOD_INSERT_ERROR(400,"新增商品失败"),
     DISC_LIKES_ERROR(400,"帖子点赞失败"),
+    GOOD_USER_FIND_ERROR(400,"该用户下发布商品查询出错"),
 
 	//
     ;

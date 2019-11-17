@@ -88,4 +88,18 @@ public class GoodsServiceImpl implements GoodsService {
             throw new JieBeiException(ExceptionEnum.GOOD_INSERT_ERROR);
         }
     }
+
+    @Override
+    public List<Good> findAllGoodsByUid(Integer uid) {
+        List<Good> goodList = null;
+        Good good = new Good();
+        good.setUid(uid);
+
+        try {
+            goodList = goodsMapper.select(good);
+        } catch (Exception e) {
+            throw new JieBeiException(ExceptionEnum.GOOD_USER_FIND_ERROR);
+        }
+        return goodList;
+    }
 }

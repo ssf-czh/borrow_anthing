@@ -17,4 +17,7 @@ public interface GoodsService {
 
     //新增物品
     void addGood(Integer uid, Good good);
+
+    //查询uid用户下的所有商品
+    List<Good> findAllGoodsByUid(Integer uid);
 }
