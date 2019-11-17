@@ -1,7 +1,7 @@
-#server:
-#  port: 80
-#  servlet:
-#    context-path: /jiebei
+server:
+  port: 80
+  servlet:
+    context-path: /jiebei
 spring:
   datasource:
     username: czh

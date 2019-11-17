@@ -22,4 +22,7 @@ public class User {
     private String password;
     private String qq;
     private String wechat;
+    private String department;
+    private String speciality;
+    private String cls;
 }
