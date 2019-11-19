@@ -14,7 +14,7 @@ public class JWTUtil {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         JwtBuilder builder = Jwts.builder().setHeaderParam("typ", "JWT") // 设置header
                 .setHeaderParam("alg", "HS256").setIssuedAt(date) // 设置签发时间
-                .setExpiration(new Date(date.getTime() + 1000 * 60 * 60 * 24 * 3))
+                .setExpiration(new Date(date.getTime() + 1000 * 60 * 60 * 24 * 30))
                 .claim("uid",String.valueOf(user.getUid()) ) // 设置内容
                 .setIssuer("lws")// 设置签发人
                 .signWith(signatureAlgorithm, key); // 签名，需要算法和key

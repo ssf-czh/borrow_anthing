@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -72,10 +73,23 @@ public class UserController {
 
         User user = userService.findUserByUid(uid);
 
-        Result result = new Result(200, "查找用户成功", user);
+        Result result = new Result(200, "查找登入用户资料成功", user);
         return ResponseEntity.ok(result);
     }
 
+    /**
+     * 根据uid查找用户 返回非隐私数据
+     * @param uid
+     * @return
+     */
+    @PostMapping("/findUserByUid")
+    public ResponseEntity<Result> findUserByUid(@RequestParam(required = true) Integer uid){
+
+        User userByUid = userService.findUserByUid(uid);
+        userByUid.setPassword(null);
+        Result result = new Result(200, "查找他人用户资料成功",userByUid);
+        return ResponseEntity.ok(result);
+    }
 
 
 
