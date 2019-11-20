@@ -110,7 +110,7 @@ public class GoodsServiceImpl implements GoodsService {
         try {
             Good good1 = goodsMapper.selectOne(good);
             if(good1.getUid()!=uid) throw new JieBeiException(ExceptionEnum.GOOD_POSSESS_ERROR);
-            goodsMapper.deleteByPrimaryKey(gid);
+            goodsMapper.deleteByPrimaryKey(good1.getGid());
         } catch (Exception e) {
             throw new JieBeiException(ExceptionEnum.GOOD_DELETE_ERROR);
         }
