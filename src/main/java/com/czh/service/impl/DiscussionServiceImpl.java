@@ -2,7 +2,9 @@ package com.czh.service.impl;
 
 import com.czh.common.enums.ExceptionEnum;
 import com.czh.common.exception.JieBeiException;
+import com.czh.mapper.CommentMapper;
 import com.czh.mapper.DiscussionMapper;
+import com.czh.pojo.Comment;
 import com.czh.pojo.Discussion;
 import com.czh.service.DiscussionService;
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +21,9 @@ public class DiscussionServiceImpl implements DiscussionService {
 
     @Autowired
     private DiscussionMapper discussionMapper;
+
+    @Autowired
+    private CommentMapper commentMapper;
 
 
     @Override
@@ -87,6 +92,23 @@ public class DiscussionServiceImpl implements DiscussionService {
             discussionMapper.updateByPrimaryKey(discussionByDid);
         } catch (Exception e) {
             throw new JieBeiException(ExceptionEnum.DISC_LIKES_ERROR);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void deleteDisc(Integer uid, Integer did) {
+        Discussion discussion = new Discussion();
+        discussion.setDid(did);
+        try {
+            Discussion discussion1 = discussionMapper.selectOne(discussion);
+            if(discussion1.getUid()!=uid) throw new JieBeiException(ExceptionEnum.DISCUSSION_PRIVILEGE_ERROR);
+            discussionMapper.deleteByPrimaryKey(discussion1.getDid());
+            Example example = new Example(Comment.class);
+            example.createCriteria().andEqualTo("did",discussion1.getDid());
+            commentMapper.deleteByExample(example);
+        } catch (Exception e) {
+            throw new JieBeiException(ExceptionEnum.DISCUSSION_DELETE_ERROR);
         }
     }
 }

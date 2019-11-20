@@ -36,6 +36,8 @@ public enum ExceptionEnum {
     GOOD_DELETE_ERROR(400,"删除商品错误"),
     COMMENT_PRIVILEGE_ERROR(400,"删除商品错误"),
     COMMENT_DELETE_ERROR(400,"删除评论失败"),
+    DISCUSSION_PRIVILEGE_ERROR(400,"该用户不是帖主"),
+    DISCUSSION_DELETE_ERROR(400,"删除帖子失败"),
 
 	//
     ;

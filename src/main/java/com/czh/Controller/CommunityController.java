@@ -95,4 +95,16 @@ public class CommunityController {
 
     }
 
+    @PostMapping("deleteDisc")
+    public ResponseEntity<Result> deleteDisc(@RequestParam(value = "did",required = true) Integer did,
+                                                HttpServletRequest request){
+        String token = request.getHeader("XW-Token");
+        Integer uid = JWTUtil.parseToUid(token);
+
+        discussionService.deleteDisc(uid,did);
+
+        Result result = new Result(200, "删除帖子成功");
+        return ResponseEntity.ok(result);
+
+    }
 }

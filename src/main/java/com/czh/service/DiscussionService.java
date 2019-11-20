@@ -20,5 +20,6 @@ public interface DiscussionService {
     //增加喜欢
     void addLikes(Integer did);
 
-
+    //删除帖子 包括删除所有评论
+    void deleteDisc(Integer uid, Integer did);
 }
