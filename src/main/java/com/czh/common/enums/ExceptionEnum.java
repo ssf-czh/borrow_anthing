@@ -34,6 +34,8 @@ public enum ExceptionEnum {
     CONFIRM_THING_ERROR(400,"处理带确定申请失败"),
     GOOD_POSSESS_ERROR(400,"该用户没有该商品"),
     GOOD_DELETE_ERROR(400,"删除商品错误"),
+    COMMENT_PRIVILEGE_ERROR(400,"删除商品错误"),
+    COMMENT_DELETE_ERROR(400,"删除评论失败"),
 
 	//
     ;

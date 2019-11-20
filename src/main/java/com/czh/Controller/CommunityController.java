@@ -6,6 +6,7 @@ import com.czh.pojo.Comment;
 import com.czh.pojo.Discussion;
 import com.czh.service.CommentService;
 import com.czh.service.DiscussionService;
+import jdk.nashorn.internal.ir.CallNode;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -80,4 +81,18 @@ public class CommunityController {
         Result result = new Result(200, "点赞成功！");
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping("/deleteComment")
+    public ResponseEntity<Result> deleteComment(@RequestParam(value = "cid",required = true) Integer cid,
+                                                HttpServletRequest request){
+        String token = request.getHeader("XW-Token");
+        Integer uid = JWTUtil.parseToUid(token);
+
+        commentService.deleteComment(uid,cid);
+
+        Result result = new Result(200, "删除评论成功");
+        return ResponseEntity.ok(result);
+
+    }
+
 }

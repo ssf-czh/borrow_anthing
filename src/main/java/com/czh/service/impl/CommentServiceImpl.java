@@ -49,4 +49,17 @@ public class CommentServiceImpl implements CommentService {
         return commentList;
 
     }
+
+    @Override
+    public void deleteComment(Integer uid, Integer cid) {
+        Comment comment = new Comment();
+        comment.setCid(cid);
+        try {
+            Comment comment1 = commentMapper.selectOne(comment);
+            if(comment1.getUid()!=uid) throw new JieBeiException(ExceptionEnum.COMMENT_PRIVILEGE_ERROR);
+            commentMapper.deleteByPrimaryKey(comment1.getCid());
+        } catch (Exception e) {
+            throw new JieBeiException(ExceptionEnum.COMMENT_DELETE_ERROR);
+        }
+    }
 }
