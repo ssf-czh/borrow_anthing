@@ -22,6 +22,7 @@ public class DiscussionServiceImpl implements DiscussionService {
 
 
     @Override
+    @Transactional
     public void createDiscussion(Discussion discussion) {
 
         Integer count = null;

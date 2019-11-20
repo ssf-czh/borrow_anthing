@@ -51,6 +51,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional
     public void deleteComment(Integer uid, Integer cid) {
         Comment comment = new Comment();
         comment.setCid(cid);
