@@ -28,6 +28,12 @@ public enum ExceptionEnum {
     GOOD_INSERT_ERROR(400,"新增商品失败"),
     DISC_LIKES_ERROR(400,"帖子点赞失败"),
     GOOD_USER_FIND_ERROR(400,"该用户下发布商品查询出错"),
+    RETURN_NOT_MATCH(400,"该用户并未拥有此物品"),
+    RETURN_THING_ERROR(400,"该用户下发布商品查询出错"),
+    POSSESS_DENY_ERROR(400,"该用户不是该商品的拥有者"),
+    CONFIRM_THING_ERROR(400,"处理带确定申请失败"),
+    GOOD_POSSESS_ERROR(400,"该用户没有该商品"),
+    GOOD_DELETE_ERROR(400,"删除商品错误"),
 
 	//
     ;

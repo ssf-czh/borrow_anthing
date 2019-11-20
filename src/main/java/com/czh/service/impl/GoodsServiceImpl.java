@@ -102,4 +102,17 @@ public class GoodsServiceImpl implements GoodsService {
         }
         return goodList;
     }
+
+    @Override
+    public void delete(Integer uid, Integer gid) {
+        Good good = new Good();
+        good.setGid(gid);
+        try {
+            Good good1 = goodsMapper.selectOne(good);
+            if(good1.getUid()!=uid) throw new JieBeiException(ExceptionEnum.GOOD_POSSESS_ERROR);
+            goodsMapper.deleteByPrimaryKey(gid);
+        } catch (Exception e) {
+            throw new JieBeiException(ExceptionEnum.GOOD_DELETE_ERROR);
+        }
+    }
 }

@@ -61,4 +61,19 @@ public class GoodController {
         return ResponseEntity.ok(result);
     }
 
+    // 下架物品
+    @PostMapping("/deleteGood")
+    public ResponseEntity<Result> deleteGood(@RequestParam(value = "gid",required = true) Integer gid,
+                                             HttpServletRequest request){
+        String token = request.getHeader("XW-Token");
+        Integer uid = JWTUtil.parseToUid(token);
+
+        goodsService.delete(uid,gid);
+
+        Result result = new Result(200,"下架物品成功");
+        return ResponseEntity.ok(result);
+    }
+
+
+
 }

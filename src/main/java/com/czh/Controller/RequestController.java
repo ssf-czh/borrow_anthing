@@ -5,6 +5,7 @@ import com.czh.common.vo.Result;
 import com.czh.pojo.Request;
 import com.czh.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,12 @@ public class RequestController {
     @Autowired
     private RequestService requestService;
 
+    /**
+     * 发出申请
+     * @param request
+     * @param httpServletRequest
+     * @return
+     */
     @PostMapping("/apply")
     public ResponseEntity<Result> appyFor(Request request, HttpServletRequest httpServletRequest){
         String token =httpServletRequest.getHeader("XW-Token");
@@ -37,6 +44,11 @@ public class RequestController {
         return ResponseEntity.ok(result);
     }
 
+    /**
+     * 查找自己申请的记录
+     * @param httpServletRequest
+     * @return
+     */
     @GetMapping("/findApply")
     public ResponseEntity<Result> findUserApplication(HttpServletRequest httpServletRequest){
         String token =httpServletRequest.getHeader("XW-Token");
@@ -49,6 +61,11 @@ public class RequestController {
         return ResponseEntity.ok(result);
     }
 
+    /**
+     * 查找该用户所被申请的记录
+     * @param httpServletRequest
+     * @return
+     */
     @GetMapping("/findBeApply")
     public ResponseEntity<Result> findBeApplication(HttpServletRequest httpServletRequest){
         String token =httpServletRequest.getHeader("XW-Token");
@@ -58,6 +75,14 @@ public class RequestController {
         return ResponseEntity.ok(result);
     }
 
+    /**
+     * 处理请求
+     * @param type 0拒绝 1同意
+     * @param rid
+     * @param gid
+     * @param request
+     * @return
+     */
     @PostMapping("/handleApply")
     public ResponseEntity<Result> handleApplication(@RequestParam(value = "type",required = true) Integer type
             ,@RequestParam(value = "rid",required = true) Integer rid
@@ -68,6 +93,32 @@ public class RequestController {
         Integer uid = JWTUtil.parseToUid(token);
         requestService.handleApplication(gid,type,uid,rid);
         Result result = new Result(200, "处理成功");
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/returnThing")
+    public ResponseEntity<Result> returnThing(@RequestParam(value = "rid",required = true) Integer rid,
+                                              HttpServletRequest request){
+        String token =request.getHeader("XW-Token");
+        Integer uid = JWTUtil.parseToUid(token);
+
+        requestService.returnThing(uid,rid);
+
+        Result result = new Result(200, "处理成功，等待确认！");
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/confirmReturn")
+    public ResponseEntity<Result> confirmReturn(@RequestParam(value = "rid",required = true) Integer rid,
+                                                HttpServletRequest request,
+                                                Integer type){
+
+        String token =request.getHeader("XW-Token");
+        Integer uid = JWTUtil.parseToUid(token);
+
+        requestService.confirmReturn(uid,rid,type);
+
+        Result result = new Result(200, "确认归还成功");
         return ResponseEntity.ok(result);
     }
 
