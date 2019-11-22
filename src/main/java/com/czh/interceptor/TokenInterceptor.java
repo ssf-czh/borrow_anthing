@@ -106,7 +106,7 @@ public class TokenInterceptor implements HandlerInterceptor {
             //判断Token过期
             Date tokenDate=(Date)claims.getExpiration();
             int chaoshi=(int)(new Date().getTime()-tokenDate.getTime())/1000;
-            if(chaoshi>60*60*24*30){
+            if(chaoshi>60*60*24*3){
                 //resultWriter.write("你的token过期了？,需要登录");
                 System.out.println(4);
                 return false;
